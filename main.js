@@ -4,229 +4,265 @@ const addCurrencyList = document.querySelector(".add-currency-list");
 const currenciesList = document.querySelector(".currencies");
 
 
-const dataURL = "https://api.exchangeratesapi.io/latest";
 
 const initiallyDisplayedCurrencies = ["USD", "JPY", "NGN", "GBP", "CAD"];
 
 let baseCurrency;
 let baseCurrencyAmount;
 
-let currencies = [
+const currencies = [
         {
           name: "US Dollar",
           abbreviation: "USD",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/us.gif"
+          flagURL: "http://www.geonames.org/flags/l/us.gif",
+          rate: 1.03
         },
         {
           name: "Euro",
           abbreviation: "EUR",
           symbol: "\u20AC",
-          flagURL: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+          flagURL: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg",
+          rate: 1
         },
         {
           name: "Japanese Yen",
           abbreviation: "JPY",
           symbol: "\u00A5",
-          flagURL: "http://www.geonames.org/flags/l/jp.gif"
+          flagURL: "http://www.geonames.org/flags/l/jp.gif",
+          rate: 143.60
         },
         {
             name: "Nigerian Naira",
             abbreviation: "NGN",
             symbol: "\u20A6",
-            flagURL: "https://www.geonames.org/flags/l/ng.gif"
+            flagURL: "https://www.geonames.org/flags/l/ng.gif",
+            rate: 459.10
         },
         {
           name: "British Pound",
           abbreviation: "GBP",
           symbol: "\u00A3",
-          flagURL: "http://www.geonames.org/flags/l/uk.gif"
+          flagURL: "http://www.geonames.org/flags/l/uk.gif",
+          rate: 0.86
+
         },
         {
           name: "Australian Dollar",
           abbreviation: "AUD",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/au.gif"
+          flagURL: "http://www.geonames.org/flags/l/au.gif",
+          rate: 1.56
         },
         {
           name: "Canadian Dollar",
           abbreviation: "CAD",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/ca.gif"
+          flagURL: "http://www.geonames.org/flags/l/ca.gif",
+          rate: 1.40
         },
         {
           name: "Swiss Franc",
           abbreviation: "CHF",
           symbol: "\u0043\u0048\u0046",
-          flagURL: "http://www.geonames.org/flags/l/ch.gif"
+          flagURL: "http://www.geonames.org/flags/l/ch.gif",
+          rate: 0.98
         },
         {
           name: "Chinese Yuan Renminbi",
           abbreviation: "CNY",
           symbol: "\u00A5",
-          flagURL: "http://www.geonames.org/flags/l/cn.gif"
+          flagURL: "http://www.geonames.org/flags/l/cn.gif",
+          rate: 7.45
         },
         {
           name: "Swedish Krona",
           abbreviation: "SEK",
           symbol: "\u006B\u0072",
-          flagURL: "http://www.geonames.org/flags/l/se.gif"
+          flagURL: "http://www.geonames.org/flags/l/se.gif",
+          rate: 10.92
         },
         {
           name: "New Zealand Dollar",
           abbreviation: "NZD",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/nz.gif"
+          flagURL: "http://www.geonames.org/flags/l/nz.gif",
+          rate: 1.68
         },
         {
             name: "Ghanian Cedi",
             abbreviation: "GHC",
             symbol: "\u20B5",
-            flagURL: "https://www.geonames.org/flags/l/gh.gif"
+            flagURL: "https://www.geonames.org/flags/l/gh.gif",
+            rate: 15.26
         },
         {
           name: "Mexican Peso",
           abbreviation: "MXN",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/mx.gif"
+          flagURL: "http://www.geonames.org/flags/l/mx.gif",
+          rate: 19.98
         },
         {
           name: "Singapore Dollar",
           abbreviation: "SGD",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/sg.gif"
+          flagURL: "http://www.geonames.org/flags/l/sg.gif",
+          rate: 1.43
         },
         {
           name: "Hong Kong Dollar",
           abbreviation: "HKD",
           symbol: "\u0024",
-          flagURL: "http://www.geonames.org/flags/l/hk.gif"
+          flagURL: "http://www.geonames.org/flags/l/hk.gif",
+          rate: 8.08
         },
         {
           name: "Norwegian Krone",
           abbreviation: "NOK",
           symbol: "\u006B\u0072",
-          flagURL: "http://www.geonames.org/flags/l/no.gif"
+          flagURL: "http://www.geonames.org/flags/l/no.gif",
+          rate: 10.37
         },
         {
           name: "South Korean Won",
           abbreviation: "KRW",
           symbol: "\u20A9",
-          flagURL: "http://www.geonames.org/flags/l/kr.gif"
+          flagURL: "http://www.geonames.org/flags/l/kr.gif",
+          rate: 1387.51
         },
         {
           name: "Turkish Lira",
           abbreviation: "TRY",
           symbol: "\u20BA",
-          flagURL: "http://www.geonames.org/flags/l/tr.gif"
+          flagURL: "http://www.geonames.org/flags/l/tr.gif",
+          rate: 19.29
         },
         {
           name: "Russian Ruble",
           abbreviation: "RUB",
           symbol: "\u20BD",
-          flagURL: "http://www.geonames.org/flags/l/ru.gif"
+          flagURL: "http://www.geonames.org/flags/l/ru.gif",
+          rate: 63.64
         },
         {
           name: "Indian Rupee",
           abbreviation: "INR",
           symbol: "\u20B9",
-          flagURL: "http://www.geonames.org/flags/l/in.gif"
+          flagURL: "http://www.geonames.org/flags/l/in.gif",
+          rate: 84.46
         },
         {
           name: "Brazilian Real",
           abbreviation: "BRL",
           symbol: "\u0052\u0024",
-          flagURL: "http://www.geonames.org/flags/l/br.gif"
+          flagURL: "http://www.geonames.org/flags/l/br.gif",
+          rate: 5.55
         },
         {
           name: "South African Rand",
           abbreviation: "ZAR",
           symbol: "\u0052",
-          flagURL: "http://www.geonames.org/flags/l/za.gif"
+          flagURL: "http://www.geonames.org/flags/l/za.gif",
+          rate: 17.73
         },
         {
           name: "Philippine Peso",
           abbreviation: "PHP",
           symbol: "\u20B1",
-          flagURL: "http://www.geonames.org/flags/l/ph.gif"
+          flagURL: "http://www.geonames.org/flags/l/ph.gif",
+          rate: 58.59
         },
         {
           name: "Czech Koruna",
           abbreviation: "CZK",
           symbol: "\u004B\u010D",
-          flagURL: "http://www.geonames.org/flags/l/cz.gif"
+          flagURL: "http://www.geonames.org/flags/l/cz.gif",
+          rate:24.32
         },
         {
           name: "Indonesian Rupiah",
           abbreviation: "IDR",
           symbol: "\u0052\u0070",
-          flagURL: "http://www.geonames.org/flags/l/id.gif"
+          flagURL: "http://www.geonames.org/flags/l/id.gif",
+          rate: 16293
         },
         {
           name: "Malaysian Ringgit",
           abbreviation: "MYR",
           symbol: "\u0052\u004D",
-          flagURL: "http://www.geonames.org/flags/l/my.gif"
+          flagURL: "http://www.geonames.org/flags/l/my.gif",
+          rate: 4.63
         },
         {
           name: "Hungarian Forint",
           abbreviation: "HUF",
           symbol: "\u0046\u0074",
-          flagURL: "http://www.geonames.org/flags/l/hu.gif"
+          flagURL: "http://www.geonames.org/flags/l/hu.gif",
+          rate: 406.75
         },
         {
           name: "Icelandic Krona",
           abbreviation: "ISK",
           symbol: "\u006B\u0072",
-          flagURL: "http://www.geonames.org/flags/l/is.gif"
+          flagURL: "http://www.geonames.org/flags/l/is.gif",
+          rate: 147.09
         },
         {
           name: "Croatian Kuna",
           abbreviation: "HRK",
           symbol: "\u006B\u006E",
-          flagURL: "http://www.geonames.org/flags/l/hr.gif"
+          flagURL: "http://www.geonames.org/flags/l/hr.gif",
+          rate: 7.55
         },
         {
           name: "Bulgarian Lev",
           abbreviation: "BGN",
           symbol: "\u043B\u0432",
-          flagURL: "http://www.geonames.org/flags/l/bg.gif"
+          flagURL: "http://www.geonames.org/flags/l/bg.gif",
+          rate: 1.96
         },
         {
             name: "Nepalese Rupee",
             abbreviation: "NPR",
             symbol: "\u20B9",
-            flagURL: "https://www.geonames.org/flags/l/np.gif"
+            flagURL: "https://www.geonames.org/flags/l/np.gif",
+            rate: 135.22
         },
         {
           name: "Romanian Leu",
           abbreviation: "RON",
           symbol: "\u006C\u0065\u0069",
-          flagURL: "http://www.geonames.org/flags/l/ro.gif"
+          flagURL: "http://www.geonames.org/flags/l/ro.gif",
+          rate: 4.92
         },
         {
           name: "Danish Krone",
           abbreviation: "DKK",
           symbol: "\u006B\u0072",
-          flagURL: "http://www.geonames.org/flags/l/dk.gif"
+          flagURL: "http://www.geonames.org/flags/l/dk.gif",
+          rate: 7.44
         },
         {
           name: "Thai Baht",
           abbreviation: "THB",
           symbol: "\u0E3F",
-          flagURL: "http://www.geonames.org/flags/l/th.gif"
+          flagURL: "http://www.geonames.org/flags/l/th.gif",
+          rate: 37.03
         },
         {
           name: "Polish Zloty",
           abbreviation: "PLN",
           symbol: "\u007A\u0142",
-          flagURL: "http://www.geonames.org/flags/l/pl.gif"
+          flagURL: "http://www.geonames.org/flags/l/pl.gif",
+          rate: 4.69
         },
         {
           name: "Israeli Shekel",
           abbreviation: "ILS",
           symbol: "\u20AA",
-          flagURL: "http://www.geonames.org/flags/l/il.gif"
+          flagURL: "http://www.geonames.org/flags/l/il.gif",
+          rate: 3.57
         }
     ];
 
@@ -354,14 +390,6 @@ function newCurrenciesListItem(currency) {
   );
 }
 
-fetch(dataURL)
-  .then(res => res.json())
-  .then(data => {
-    document.querySelector(".date").textContent = data.date;
-    data.rates["EUR"] = 1;
-    currencies = currencies.filter(currency => data.rates[currency.abbreviation]);
-    currencies.forEach(currency => currency.rate = data.rates[currency.abbreviation]);
-    populateAddCurrencyList();
-    populateCurrenciesList();
-  })
-  .catch(err => console.log(err));
+populateAddCurrencyList();
+
+populateCurrenciesList();
